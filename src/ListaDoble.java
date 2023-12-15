@@ -113,10 +113,10 @@ public class ListaDoble {
 		}
 
 		if (temp != null){  //Nodo buscado se encontró
-			temp.next = temp.next.next;
-			temp.next.previous.previous = null;
-			temp.next.previous.next = null;
-			temp.next.previous = temp;
+			temp.previous.next = temp.next;
+			temp.next.previous = temp.previous;
+			temp.next = null;
+			temp.previous = null;
 			temp = null;
 			
 			return true;
