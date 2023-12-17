@@ -167,7 +167,7 @@ public class ListaDoble {
             if (actual.name.equals(valor)) {
                 // Nodo encontrado, insertar después de este nodo
                 Node nuevoNodo = new Node();
-                nuevoNodo.name = valor;
+                nuevoNodo.name = newsValor;
                 nuevoNodo.next = actual.next;
                 nuevoNodo.previous = actual;
                 
@@ -181,17 +181,42 @@ public class ListaDoble {
             actual = actual.next;
         }
     }
-    // Método para intercambiar un nodo por otro buscado
+     /*Método para intercambiar un nodo por otro buscado y
+	correción del metodo de intercambiar nodo*/
     public void intercambiarNodos(String valorNodo, String newsValor) {
         Node actual = topForward;
 
         // Buscar el nodo a intercambiar
         while (actual != null) {
-            if (actual.name.equals(valorNodo)) {
+						//En el caso de que el nodo intercambiado seal el primero
+			 if(actual.name.equals(valorNodo)&& actual.previous == null){
+				Node temp = new Node();
+				temp.name = newsValor;
+				actual.next.previous = temp;
+				temp.next = actual.next;
+				this.topForward = temp;
+				temp = null;
+			 }
+            if (actual.name.equals(valorNodo) && actual.previous != null && actual.next != null) {
                 // Nodo encontrado, intercambiar este nodo
-                actual.name = newsValor;
-                return;
+				Node temp = new Node();
+                temp.name = newsValor;
+				actual.previous.next = temp;
+				actual.next.previous = temp;
+				temp.next = actual.next;
+				temp.previous = actual.previous;
+				temp = null;
             }
+
+			 //En el caso de que el nodo intercambiado sea el ultimo
+			 if (actual.name.equals(valorNodo) && actual.next == null){
+				Node temp = new Node();
+				actual.previous.next = temp;
+				temp.previous = actual.previous;
+				temp.name = newsValor;
+				this.topBackward = temp;
+				temp = null;
+			} 
             actual = actual.next;
         }
     }
